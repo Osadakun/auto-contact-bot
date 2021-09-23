@@ -6,6 +6,9 @@ import config
 
 PG_URL = config.PG_URL
 
+def add_friend(UserID):
+    pass
+
 def CreateTable(usrname):
     cur.execute("CREATE TABLE IF NOT EXISTS {} (year int, month int, start timestamp, finish timestamp, id serial primary key);".format(usrname))
 

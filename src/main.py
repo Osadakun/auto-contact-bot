@@ -9,7 +9,10 @@ from linebot.exceptions import (
 from linebot.models import *
 
 import os
+import sys
+
 import config
+import mylib
 
 app = Flask(__name__)
 
@@ -17,6 +20,7 @@ app = Flask(__name__)
 #取得するコード
 line_bot_api = LineBotApi(config.ACCESS_TOKEN)
 handler = WebhookHandler(config.CHANNEL_SECRET)
+PG_URL = config.PG_URL
 
 #herokuへのデプロイが成功したかどうかを確認するためのコード
 @app.route("/")
@@ -41,6 +45,9 @@ def callback():
         abort(400)
     return 'OK'
 
+if PG_URL is None:
+    print('must set DATABASE_URL')
+    sys.exit(1)
 
 #以下でWebhookから送られてきたイベントをどのように処理するかを記述する
 @handler.add(FollowEvent)

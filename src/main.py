@@ -9,17 +9,14 @@ from linebot.exceptions import (
 from linebot.models import *
 
 import os
+import config
 
 app = Flask(__name__)
 
 #herokuの環境変数に設定された、LINE DevelopersのアクセストークンとChannelSecretを
 #取得するコード
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
-line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(YOUR_CHANNEL_SECRET)
-
-db = ""
+line_bot_api = LineBotApi(config.ACCESS_TOKEN)
+handler = WebhookHandler(config.CHANNEL_SECRET)
 
 #herokuへのデプロイが成功したかどうかを確認するためのコード
 @app.route("/")
@@ -57,7 +54,6 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=event.message.text)
     )
-function.response()
 
 # ポート番号の設定
 if __name__ == "__main__":
